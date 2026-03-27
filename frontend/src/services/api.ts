@@ -1,6 +1,6 @@
 import { toast } from 'sonner';
 
-// ✅ FORCE production backend URL (fallback removed)
+// FORCE production backend URL (fallback removed)
 const API_BASE_URL =
   import.meta.env.VITE_API_URL ||
   'https://backend-service-production-667f.up.railway.app/api';
@@ -75,6 +75,75 @@ class ApiService {
       return { error: errorMessage };
     }
   }
+
+// ================= SKILLS PROVIDER =================
+
+async getSkillsProviderDashboard() {
+  return this.request('/skills-provider/dashboard');
+}
+
+async getMyProducts() {
+  return this.request('/skills-provider/products');
+}
+
+async getCategories() {
+  return this.request('/skills-provider/categories');
+}
+
+async createProduct(data: any) {
+  return this.request('/skills-provider/products', {
+    method: 'POST',
+    body: JSON.stringify(data),
+  });
+}
+
+async updateProduct(id: number, data: any) {
+  return this.request(`/skills-provider/products/${id}`, {
+    method: 'PUT',
+    body: JSON.stringify(data),
+  });
+}
+
+async deleteProduct(id: number) {
+  return this.request(`/skills-provider/products/${id}`, {
+    method: 'DELETE',
+  });
+}
+
+
+// ================= EVENT COORDINATOR =================
+
+async getEventCoordinatorDashboard() {
+  return this.request('/event-coordinator/dashboard');
+}
+
+async getMyEvents() {
+  return this.request('/event-coordinator/events');
+}
+
+async createEvent(data: any) {
+  return this.request('/event-coordinator/events', {
+    method: 'POST',
+    body: JSON.stringify(data),
+  });
+}
+
+async updateEvent(id: number, data: any) {
+  return this.request(`/event-coordinator/events/${id}`, {
+    method: 'PUT',
+    body: JSON.stringify(data),
+  });
+}
+
+async cancelEvent(id: number) {
+  return this.request(`/event-coordinator/events/${id}`, {
+    method: 'DELETE',
+  });
+}
+
+async getEventDetails(id: number) {
+  return this.request(`/event-coordinator/events/${id}`);
+}
 
   // ================= AUTH =================
 
