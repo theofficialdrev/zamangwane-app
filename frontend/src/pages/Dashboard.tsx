@@ -114,17 +114,26 @@ function LearnerDashboard() {
   const [dashboardData, setDashboardData] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const fetchDashboardData = async () => {
-    try {
-      setIsLoading(true);
-      const response: any = await apiService.getUserDashboard();
-setDashboardData(response?.data || {});
-    } catch (error) {
-      toast.error('Failed to load dashboard data');
-    } finally {
-      setIsLoading(false);
-    }
-  };
+ const fetchDashboardData = async () => {
+  try {
+    setIsLoading(true);
+
+    const [dashboardRes, productsRes, categoriesRes]: any = await Promise.all([
+      apiService.getSkillsProviderDashboard(),
+      apiService.getMyProducts(),
+      apiService.getCategories(),
+    ]);
+
+    setDashboardData(dashboardRes?.data || {});
+    setProducts(productsRes?.data?.products || []);
+    setCategories(categoriesRes?.data?.categories || []);
+
+  } catch (error) {
+    toast.error('Failed to load dashboard data');
+  } finally {
+    setIsLoading(false);
+  }
+};
 
   useEffect(() => {
     fetchDashboardData();
