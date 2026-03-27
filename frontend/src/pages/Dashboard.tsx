@@ -386,29 +386,24 @@ function SkillsProviderDashboard() {
   });
 
   const fetchDashboardData = async () => {
-    try {
-      setIsLoading(true);
-      const [dashboardRes, productsRes, categoriesRes] = await Promise.all([
-        apiService.getSkillsProviderDashboard(),
-        apiService.getMyProducts(),
-        apiService.getCategories(),
-      ]);
+  try {
+    setIsLoading(true);
 
-      if (dashboardRes.data) {
-        setDashboardData(dashboardRes.data);
-      }
-      if (productsRes.data) {
-        setProducts(productsRes.data.products);
-      }
-      if (categoriesRes.data) {
-        setCategories(categoriesRes.data.categories);
-      }
-    } catch (error) {
-      toast.error('Failed to load dashboard data');
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    const [dashboardRes, productsRes, categoriesRes]: any = await Promise.all([
+      apiService.getSkillsProviderDashboard(),
+      apiService.getMyProducts(),
+      apiService.getCategories(),
+    ]);
+
+    setDashboardData(dashboardRes?.data || {});
+    setProducts(productsRes?.data?.products || []);
+    setCategories(categoriesRes?.data?.categories || []);
+  } catch (error) {
+    toast.error('Failed to load dashboard data');
+  } finally {
+    setIsLoading(false);
+  }
+};
 
   useEffect(() => {
     fetchDashboardData();
@@ -913,28 +908,22 @@ function EventCoordinatorDashboard() {
   });
 
   const fetchDashboardData = async () => {
-    try {
-      setIsLoading(true);
-      const [dashboardRes, eventsRes] = await Promise.all([
-        apiService.getEventCoordinatorDashboard(),
-        apiService.getMyEvents(),
-      ]);
+  try {
+    setIsLoading(true);
 
-setDashboardData(dashboardRes?.data || {});
-setEvents(eventsRes?.data?.events || []);
+    const [dashboardRes, eventsRes]: any = await Promise.all([
+      apiService.getEventCoordinatorDashboard(),
+      apiService.getMyEvents(),
+    ]);
 
-      if (dashboardRes.data) {
-        setDashboardData(dashboardRes.data);
-      }
-      if (eventsRes.data) {
-        setEvents(eventsRes.data.events);
-      }
-    } catch (error) {
-      toast.error('Failed to load dashboard data');
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    setDashboardData(dashboardRes?.data || {});
+    setEvents(eventsRes?.data?.events || []);
+  } catch (error) {
+    toast.error('Failed to load dashboard data');
+  } finally {
+    setIsLoading(false);
+  }
+};
 
   useEffect(() => {
     fetchDashboardData();
@@ -1538,18 +1527,8 @@ function AdminDashboard() {
 const fetchDashboardData = async () => {
   try {
     setIsLoading(true);
-
-    const [dashboardRes, productsRes, categoriesRes]: any = await Promise.all([
-      apiService.getSkillsProviderDashboard(),
-      apiService.getMyProducts(),
-      apiService.getCategories(),
-    ]);
-
-    setDashboardData(dashboardRes?.data || {});
-
-    setProducts(productsRes?.data?.products || []);
-    setCategories(categoriesRes?.data?.categories || []);
-
+    const response: any = await apiService.getAdminDashboardStats();
+    setDashboardData(response?.data || {});
   } catch (error) {
     toast.error('Failed to load dashboard data');
   } finally {
