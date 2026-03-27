@@ -69,27 +69,18 @@ const startServer = async () => {
   try {
     await initDB();
     
-    app.listen(PORT, () => {
-      console.log(`
+    app.listen(PORT, '0.0.0.0', () => {
+  console.log(`
 ╔════════════════════════════════════════════════════════════╗
 ║                                                            ║
 ║   Zamangwane Foundation API Server                         ║
 ║                                                            ║
 ║   Running on port: ${PORT}                                ║
-║   Environment: ${process.env.NODE_ENV || 'development'}                           ║
-║                                                            ║
-║   Endpoints:                                               ║
-║   - Health:           http://localhost:${PORT}/api/health              ║
-║   - Auth:             http://localhost:${PORT}/api/auth                ║
-║   - Admin:            http://localhost:${PORT}/api/admin               ║
-║   - User:             http://localhost:${PORT}/api/user                ║
-║   - Payments:         http://localhost:${PORT}/api/payments            ║
-║   - Skills Provider:  http://localhost:${PORT}/api/skills-provider     ║
-║   - Event Coordinator: http://localhost:${PORT}/api/event-coordinator  ║
+║   Environment: ${process.env.NODE_ENV || 'development'}   ║
 ║                                                            ║
 ╚════════════════════════════════════════════════════════════╝
-      `);
-    });
+  `);
+});
   } catch (err) {
     console.error('Failed to start server:', err);
     process.exit(1);
