@@ -1,15 +1,22 @@
-import path from "path"
-import react from "@vitejs/plugin-react"
-import { defineConfig } from "vite"
-import { inspectAttr } from 'kimi-plugin-inspect-react'
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
 
-// https://vite.dev/config/
 export default defineConfig({
-  base: './',
-  plugins: [inspectAttr(), react()],
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
-    },
+  plugins: [react()],
+
+  server: {
+    host: '0.0.0.0',
+    port: 8080,
   },
-});
+
+  preview: {
+    host: '0.0.0.0',
+    port: 8080,
+
+    // THIS FIXES YOUR ERROR
+    allowedHosts: [
+      'frontend-service-production.up.railway.app',
+      '.railway.app'
+    ]
+  }
+})
